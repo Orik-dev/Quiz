@@ -17,6 +17,7 @@ class _QuiestionsScreenState extends State<QuiestionsScreen> {
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             currentQuestion.text,
@@ -24,7 +25,7 @@ class _QuiestionsScreenState extends State<QuiestionsScreen> {
           ),
           const SizedBox(height: 30),
           ...currentQuestion.answers
-              .map((answer) => AnswerButton(answerText: answer, onTap: () {})),
+              .map((answer) => AnswerButton(answerText: answer, onTap: () {}))
         ],
       ),
     );
