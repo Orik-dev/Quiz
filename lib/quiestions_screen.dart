@@ -1,6 +1,7 @@
 import 'package:adv_basics/answer_button.dart';
 import 'package:adv_basics/data/questions.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class QuiestionsScreen extends StatefulWidget {
   const QuiestionsScreen({super.key});
@@ -31,14 +32,20 @@ class _QuiestionsScreenState extends State<QuiestionsScreen> {
           children: [
             Text(
               currentQuestion.text,
-              style: const TextStyle(
+              style: GoogleFonts.lato(
                 color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
-            ...currentQuestion.getShuffledAnswers().map((answer) =>
-                AnswerButton(answerText: answer, onTap: answerQuestion))
+            ...currentQuestion
+                .getShuffledAnswers()
+                .map((answer) => AnswerButton(
+                      answerText: answer,
+                      onTap: answerQuestion,
+                    ))
           ],
         ),
       ),
