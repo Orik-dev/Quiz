@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuiestionsScreen extends StatefulWidget {
-  const QuiestionsScreen({super.key});
+  const QuiestionsScreen({required this.onSelectAnswer, super.key});
+
+  final void Function(String answer) onSelectAnswer;
 
   @override
   State<QuiestionsScreen> createState() => _QuiestionsScreenState();
@@ -13,7 +15,8 @@ class QuiestionsScreen extends StatefulWidget {
 class _QuiestionsScreenState extends State<QuiestionsScreen> {
   var currentQuestionIndex = 0;
 
-  void answerQuestion() {
+  void answerQuestion(String selectedAnswer) {
+    widget.onSelectAnswer(selectedAnswer);
     setState(() {
       currentQuestionIndex++;
     });
@@ -25,7 +28,7 @@ class _QuiestionsScreenState extends State<QuiestionsScreen> {
     return SizedBox(
       width: double.infinity,
       child: Container(
-        margin: const EdgeInsets.all(40),
+        margin: const EdgeInsets.all(30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -33,19 +36,21 @@ class _QuiestionsScreenState extends State<QuiestionsScreen> {
             Text(
               currentQuestion.text,
               style: GoogleFonts.lato(
-                color: Colors.white,
+                color: const Color.fromARGB(255, 29, 176, 225),
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
-            ...currentQuestion
-                .getShuffledAnswers()
-                .map((answer) => AnswerButton(
-                      answerText: answer,
-                      onTap: answerQuestion,
-                    ))
+            ...currentQuestion.getShuffledAnswers().map(
+                  (answer) => AnswerButton(
+                    answerText: answer,
+                    onTap: (() {
+                      answerQuestion(answer);
+                    }),
+                  ),
+                ),
           ],
         ),
       ),
